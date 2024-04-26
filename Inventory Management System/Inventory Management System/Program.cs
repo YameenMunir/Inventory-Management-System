@@ -8,6 +8,7 @@ namespace MyApp
     {
         static void Main(string[] args)
         {
+            // The menu of when the program is run
             while (true)
             {
                 Console.WriteLine("1. Inserting data");
@@ -20,21 +21,25 @@ namespace MyApp
 
                 switch (choice)
                 {
+                    //Inserting data into the database
                     case 1:
                         Console.Write("Enter SQL for Insert: ");
                         string insertSql = Console.ReadLine();
                         DBCon.InsertData(insertSql);
                         break;
+                    //Reading data from the database
                     case 2:
                         Console.Write("Enter SQL for Read: ");
                         string readSql = Console.ReadLine();
                         DBCon.GetData(readSql);
                         break;
+                    // Updating the data that is present in the database
                     case 3:
                         Console.Write("Enter SQL for Update: ");
                         string updateSql = Console.ReadLine();
                         DBCon.UpdateData(updateSql);
                         break;
+                    // Deleting data that is present in the database
                     case 4:
                         Console.Write("Enter SQL for Delete: ");
                         string deleteSql = Console.ReadLine();
@@ -42,6 +47,7 @@ namespace MyApp
                         break;
                     case 5:
                         return;
+                    // This will tell the user that their number is invalid at will have to enter in their option again
                     default:
                         Console.WriteLine("Invalid option.");
                         break;
@@ -52,10 +58,11 @@ namespace MyApp
 
     public static class DBCon
     {
-        // Update the ConnectionString with the correct path
-        private static string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Path\To\Your\Database\Inventory.accdb;Persist Security Info=False;";
+        // Make sure to update the ConnectionString with the correct path
+        private static string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=F:\Database project\Inventory Management System\Inventory Management System\bin\Debug\Inventory.accdb;Persist Security Info=False;";
 
 
+        //Database connector function
         public static OleDbConnection Connect()
         {
             OleDbConnection con = null;
@@ -74,6 +81,7 @@ namespace MyApp
             return con;
         }
 
+        // Function to execute a SQL query and return a dataset
         public static DataSet ExecuteQuery(string sql)
         {
             using (OleDbConnection con = Connect())
@@ -85,6 +93,7 @@ namespace MyApp
             }
         }
 
+        // Function to execute SQL commands that do not return any result
         public static void ExecuteNonQuery(string sql)
         {
             using (OleDbConnection con = Connect())
@@ -99,6 +108,7 @@ namespace MyApp
             }
         }
 
+        //Function for inserting data from the database
         public static void InsertData(string sql)
         {
             try
@@ -112,6 +122,7 @@ namespace MyApp
             }
         }
 
+        //Function for retriving data from the database
         public static void GetData(string sql)
         {
             try
@@ -131,9 +142,9 @@ namespace MyApp
                         }
                     }
                 }
-                else
+                else 
                 {
-                    Console.WriteLine("No data found.");
+                    Console.WriteLine("No data is found");
                 }
             }
             catch (Exception ex)
@@ -142,6 +153,7 @@ namespace MyApp
             }
         }
 
+        //Function for updating the data
         public static void UpdateData(string sql)
         {
             try
@@ -155,6 +167,7 @@ namespace MyApp
             }
         }
 
+        //Function for deleting the data
         public static void DeleteData(string sql)
         {
             try
@@ -167,5 +180,6 @@ namespace MyApp
                 Console.WriteLine("Error deleting data: " + ex.Message);
             }
         }
+
     }
 }
